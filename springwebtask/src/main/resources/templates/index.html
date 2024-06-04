@@ -14,7 +14,7 @@
     <img th:src="@{/images/logo.png}" class="login-logo">
     <p class="error">[[ ${session.message} ]]</p>
 
-    <form action="login" method="post" th:object="${loginForm}">
+    <form action="#" method="post" th:object="${loginForm}">
         <fieldset>
             <div class="cp_iptxt">
                 <input class="base-input" type="text"  th:field="*{login_id}" name="loginId" placeholder="ID">

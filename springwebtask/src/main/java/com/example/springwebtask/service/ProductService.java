@@ -1,9 +1,9 @@
 package com.example.springwebtask.service;
 
 import com.example.springwebtask.dao.Dao;
-import com.example.springwebtask.entity.Category;
 import com.example.springwebtask.entity.Entity;
 import com.example.springwebtask.entity.Menu;
+import com.example.springwebtask.entity.NewName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +26,14 @@ public Entity findByLogin(String login_id, String password) {
 public List<Menu> findAll() {
     return Dao.findAll();
 }
-//@Override
-//public List<Category> findAll2() {
-//        return Dao.findAll2();
-//    }
 
     @Override
     public List<Menu> search(String name) {
         return Dao.search(name);
+    }
+
+    @Override
+    public int insert(NewName stationery) {
+        return Dao.insert(stationery);
     }
 }

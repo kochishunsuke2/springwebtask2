@@ -1,8 +1,7 @@
 package com.example.springwebtask.controller;
 
 import com.example.springwebtask.entity.Entity;
-import com.example.springwebtask.entity.Menu;
-import com.example.springwebtask.form.LoginForm;
+import com.example.springwebtask.entity.NewName;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,8 +39,14 @@ public class LoginController {
         return "index";
     }
 
+    @GetMapping("/menu.html")
+    public String productList(Model model) {
+        model.addAttribute("products", productService.findAll());
+        return "menu";
+    }
+
     @GetMapping("/menu")
-    public String menu(@RequestParam(name="name") String name, Model model) {
+    public String menu(@RequestParam(name="name") @PathVariable String name, Model model) {
 
         if (name != null && !name.trim().isEmpty()) {
             model.addAttribute("products", productService.search(name));
@@ -49,6 +54,21 @@ public class LoginController {
             model.addAttribute("products", productService.findAll());
         }
         return "menu";
+    }
+
+    @GetMapping("/insert")
+    public String insert1(Model model, @ModelAttribute("insert") NewName stationery) {
+        model.addAttribute("product", new NewName("","",null,null,""));
+        return "insert";
+    }
+
+    @PostMapping("/insert")
+    public String insert(@Validated @ModelAttribute("insert") NewName stationery, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "/insert";
+        }
+        productService.insert(stationery);
+        return "redirect:/menu.html";
     }
 
 }

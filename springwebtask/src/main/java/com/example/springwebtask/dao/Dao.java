@@ -1,8 +1,8 @@
 package com.example.springwebtask.dao;
 
-import com.example.springwebtask.entity.Category;
 import com.example.springwebtask.entity.Entity;
 import com.example.springwebtask.entity.Menu;
+import com.example.springwebtask.entity.NewName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -50,4 +50,14 @@ public class Dao implements pgDao {
                 param2, new DataClassRowMapper<>(Menu.class));
     }
 
+    @Override
+    public int insert(NewName stationery) {
+        var param = new MapSqlParameterSource();
+        param.addValue("code", stationery.product_code());
+        param.addValue("name", stationery.name());
+        param.addValue("price", stationery.price());
+        param.addValue("id", stationery.category_id());
+        param.addValue("description", stationery.description());
+        return jdbcTemplate.update("INSERT INTO products (product_code, name, price, category_id, description) VALUES (:code, :name, :price, :id, :description)", param);
+    }
 }

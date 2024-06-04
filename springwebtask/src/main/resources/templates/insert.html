@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>商品登録</title>
@@ -10,7 +10,7 @@
 <div class="header">
     <h1 class="site_logo"><a href="menu.html">商品管理システム</a></h1>
     <div class="user">
-        <p class="user_name">[[ ${session.entity.name} ]]、こんにちは</p>
+        <p class="user_name">[[ ${session.product.name} ]]さん、こんにちは</p>
         <form class="logout_form" action="logout.html" method="get">
             <button class="custom-btn" type="submit">
                 <img th:src="@{/images/ドアアイコン.png}">ログアウト</button>
@@ -28,24 +28,28 @@
     </div>
 
     <div class="form-body">
-        <p class="error">エラーメッセージ</p>
+        <p class="error">
+            エラーメッセージ</p>
 
-        <form action="insert" method="post" th:object="${loginForm}">
+        <form action="#" th:action="@{/insert.html}" method="post" th:object="${insert}">
             <fieldset class="label-130">
                 <div>
-                    <label class="required">商品ID</label>
-                    <input type="text" name="productId" class="base-text">
-                    <span class="error">エラーメッセージ</span>
+                    <label class="required" for="product_code">商品ID</label>
+                    <input type="text" id="product_code" th:field="*{product_code}"  class="base-text" />
+                    <span class="error"  th:if="${#fields.hasErrors('product_code')}" th:errors="*{product_code}"></span>
+                        [[ ${error} ]]
                 </div>
                 <div>
-                    <label class="required">商品名</label>
-                    <input type="text" name="name" class="base-text">
-                    <span class="error">エラーメッセージ</span>
+                    <label class="required" for="name">商品名</label>
+                    <input type="text" id="name" th:field="*{name}"  class="base-text" />
+                    <span class="error"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                          [[ ${error} ]]
                 </div>
                 <div>
-                    <label class="required">単価</label>
-                    <input type="text" name="price" class="base-text">
-                    <span class="error">エラーメッセージ</span>
+                    <label class="required" for="price">単価</label>
+                    <input type="text" id="price" th:field="*{price}"  class="base-text" />
+                    <span class="error"  th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                        [[ ${error} ]]
                 </div>
                 <div class="select_block">
                     <label class="required">カテゴリ</label>

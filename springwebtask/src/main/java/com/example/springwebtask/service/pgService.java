@@ -1,8 +1,8 @@
 package com.example.springwebtask.service;
 
-import com.example.springwebtask.entity.Category;
 import com.example.springwebtask.entity.Entity;
 import com.example.springwebtask.entity.Menu;
+import com.example.springwebtask.entity.NewName;
 
 import java.util.List;
 
@@ -13,5 +13,6 @@ public interface pgService {
     List<Menu> findAll();
 //    List<Category> findAll2();
     List<Menu> search(String name);
+    int insert(NewName stationery);
 
 }
