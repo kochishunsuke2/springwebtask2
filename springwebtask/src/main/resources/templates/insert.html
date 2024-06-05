@@ -31,12 +31,12 @@
         <p class="error">
             エラーメッセージ</p>
 
-        <form action="#" th:action="@{/insert.html}" method="post" th:object="${insert}">
+        <form action="insert"  method="post" th:object="${productForm}">
             <fieldset class="label-130">
                 <div>
-                    <label class="required" for="product_code">商品ID</label>
-                    <input type="text" id="product_code" th:field="*{product_code}"  class="base-text" />
-                    <span class="error"  th:if="${#fields.hasErrors('product_code')}" th:errors="*{product_code}"></span>
+                    <label class="required" for="product_id">商品ID</label>
+                    <input type="text" id="product_id" th:field="*{product_id}"  class="base-text" />
+                    <span class="error"  th:if="${#fields.hasErrors('product_id')}" th:errors="*{product_id}"></span>
                         [[ ${error} ]]
                 </div>
                 <div>
@@ -52,33 +52,37 @@
                         [[ ${error} ]]
                 </div>
                 <div class="select_block">
-                    <label class="required">カテゴリ</label>
-                    <select name="categoryId" class="base-text">
-                        <option value="1">筆記具</option>
-                        <option value="2">紙製品</option>
-                        <option value="3">事務消耗品</option>
-                        <option value="4">オフィス機器</option>
-                        <option value="5">雑貨</option>
+                    <label class="required" for="category_id">カテゴリ</label>
+                    <select id="category_id" th:field="*{category_id}" class="base-text">
+                        <option th:each="category : ${products}"
+                                th:value="${category.id}" th:text="${category.category_name}">
+                        </option>
+<!--                        <option value="2">紙製品</option>-->
+<!--                        <option value="3">事務消耗品</option>-->
+<!--                        <option value="4">オフィス機器</option>-->
+<!--                        <option value="5">雑貨</option>-->
+                        <span class="error"  th:if="${#fields.hasErrors('category_id')}" th:errors="*{category_id}"></span>
+                        [[ ${error} ]]
                     </select>
                 </div>
                 <div>
                     <label>商品説明</label>
                     <textarea name="description" class="base-text"></textarea>
                 </div>
-                <div>
-                    <label>画像</label>
-                    <input type="file" name="file">
-                    <span class="error">エラーメッセージ</span>
-                </div>
+<!--                <div>-->
+<!--                    <label>画像</label>-->
+<!--                    <input type="file" name="file">-->
+<!--                    <span class="error">エラーメッセージ</span>-->
+<!--                </div>-->
             </fieldset>
             <div class="btns">
                 <button type="button" onclick="openModal()" class="basic-btn">登録</button>
-                <input type="button" onclick="location.href='./menu.html'" value="戻る" class="cancel-btn">
+                <input type="button" onclick="location.href='/menu.html'" value="戻る" class="cancel-btn">
             </div>
             <div id="modal">
                 <p class="modal-message">登録しますか？</p>
                 <div class="btns">
-                    <button type="button" id="register-btn" class="basic-btn">登録</button>
+                    <button type="submit" id="register-btn" class="basic-btn">登録</button>
                     <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
                 </div>
             </div>
