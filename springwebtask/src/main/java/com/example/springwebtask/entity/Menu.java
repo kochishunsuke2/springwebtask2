@@ -6,6 +6,7 @@ public record Menu(
         String  name,
         Integer price,
         String category_name,
-        String  description
+        String  description,
+        Integer size
 ) {
 }

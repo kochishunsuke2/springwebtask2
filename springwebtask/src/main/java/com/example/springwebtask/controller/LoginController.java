@@ -66,13 +66,20 @@ public class LoginController {
     }
 
     @PostMapping("/insert")
-    public String insert(@Validated @ModelAttribute("productForm") NewName stationery, Model model, BindingResult bindingResult) {
+    public String insert(@Validated @ModelAttribute("productForm") NewName stationery , BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("products", productService.findAll2());
-            return "/insert";
+            return "insert";
+        }
+        NewName product = productService.findByProductId(stationery.product_id());
+        if (product != null) {
+            session.setAttribute("message", "商品IDが重複しています");
+            model.addAttribute("products", productService.findAll2());
+            return "insert";
         }
         productService.insert(stationery);
-        return "redirect:/menu.html";
+//        return "redirect:/menu.html";
+        return "success";
     }
 
     @GetMapping("/detail/{id}")
@@ -85,24 +92,31 @@ public class LoginController {
     @PostMapping("/detail")
     public String productDelete(@ModelAttribute("product") Menu delete) {
         productService.delete(delete.id());
-        return "redirect:/menu.html";
+        return "success";
     }
 
     @GetMapping("/detail/update/{id}")
-    public String productUpdateForm(@PathVariable int id, Model model) {
+    public String productUpdateForm(@PathVariable int id, Model model, @ModelAttribute("productForm") NewName change) {
+      //  @ModelAttribute("productForm")
         Menu product = productService.findById(id);
         model.addAttribute("product", product);
         model.addAttribute("products", productService.findAll2());
         return "updateInput";
     }
 
-    @PostMapping("/updateInput")
-    public String productUpdate(@Validated @ModelAttribute("product") NewName change, Model model, BindingResult bindingResult) {
+    @PostMapping("/update")
+    public String productUpdate( @Validated @ModelAttribute("productForm") NewName change, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("products", productService.findAll2());
             return "updateInput";
         }
+        NewName product = productService.findByProductId(change.product_id());
+        if (product != null) {
+            session.setAttribute("message", "商品IDが重複しています");
+            model.addAttribute("products", productService.findAll2());
+            return "insert";
+        }
         productService.update(change);
-        return "redirect:/menu.html";
+        return "success";
     }
 }

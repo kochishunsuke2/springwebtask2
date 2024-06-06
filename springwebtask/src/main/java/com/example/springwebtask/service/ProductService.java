@@ -62,4 +62,9 @@ public List<Menu> findAll() {
     public int update(NewName change) {
         return Dao.update(change);
     }
+    @Override
+    public NewName findByProductId(String product_id) {
+        var product = Dao.findByProductId(product_id);
+        return product;
+    }
 }

@@ -29,40 +29,46 @@
 
     <div class="form-body">
         <p class="error">
-            エラーメッセージ</p>
+            [[ ${session.message} ]]</p>
 
         <form action="insert"  method="post" th:object="${productForm}">
             <fieldset class="label-130">
                 <div>
-                    <label class="required" for="product_id">商品ID</label>
-                    <input type="text" id="product_id" th:field="*{product_id}"  class="base-text" />
-                    <span class="error"  th:if="${#fields.hasErrors('product_id')}" th:errors="*{product_id}"></span>
-                        [[ ${error} ]]
-                </div>
-                <div>
-                    <label class="required" for="name">商品名</label>
-                    <input type="text" id="name" th:field="*{name}"  class="base-text" />
-                    <span class="error"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                    <label class="required">商品ID</label>
+                    <input type="text"  th:field="*{product_id}" name="product_id" class="base-text" />
+                    <span class="error"  th:each="error: ${#fields.errors('product_id')}">
                           [[ ${error} ]]
+                    </span>
                 </div>
                 <div>
-                    <label class="required" for="price">単価</label>
-                    <input type="text" id="price" th:field="*{price}"  class="base-text" />
-                    <span class="error"  th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
-                        [[ ${error} ]]
+                    <label class="required">商品名</label>
+                    <input type="text" th:field="*{name}" name="name" class="base-text" />
+                    <span class="error"  th:each="error: ${#fields.errors('name')}">
+                         [[ ${error} ]]
+                    </span>
+                </div>
+                <div>
+                    <label class="required">単価</label>
+                    <input type="text" th:field="*{price}" name="price" class="base-text" />
+                    <span class="error"  th:each="error: ${#fields.errors('price')}">
+                         [[ ${error} ]]
+                    </span>
                 </div>
                 <div class="select_block">
-                    <label class="required" for="category_id">カテゴリ</label>
-                    <select id="category_id" th:field="*{category_id}" class="base-text">
+                    <label class="required">カテゴリ</label>
+                    <select name="category_id" th:field="*{category_id}" class="base-text">
                         <option th:each="category : ${products}"
                                 th:value="${category.id}" th:text="${category.category_name}">
                         </option>
+                        <span class="error"  th:each="error: ${#fields.errors('category_id')}">
+                         [[ ${error} ]]
+                    </span>
 <!--                        <option value="2">紙製品</option>-->
 <!--                        <option value="3">事務消耗品</option>-->
 <!--                        <option value="4">オフィス機器</option>-->
 <!--                        <option value="5">雑貨</option>-->
-                        <span class="error"  th:if="${#fields.hasErrors('category_id')}" th:errors="*{category_id}"></span>
-                        [[ ${error} ]]
+<!--                        <span class="error"  th:each="error: ${#fields.errors('category_id')}"></span>-->
+<!--                        [[ ${error} ]]-->
                     </select>
                 </div>
                 <div>
@@ -91,11 +97,5 @@
 </div>
 <div id="fadeLayer"></div>
 <script src="./js/commons.js"></script>
-<script>
-    'use strict'
-    document.getElementById('register-btn').addEventListener('click', () => {
-      location.href = './menu.html'
-    })
-</script>
 </body>
 </html>

@@ -33,7 +33,7 @@ public class Dao implements pgDao {
     //メニュー画面
     @Override
     public List<Menu> findAll() {
-        return jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description FROM products p JOIN categories c  ON p.category_id = c.id ORDER BY p.id",
+        return jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description, count(p.id) size FROM products p JOIN categories c  ON p.category_id = c.id GROUP BY p.id, c.category_name ORDER BY p.id",
                 new DataClassRowMapper<>(Menu.class));
     }
 
@@ -47,7 +47,7 @@ public class Dao implements pgDao {
     public List<Menu> search(String name) {
         var param2 = new MapSqlParameterSource();
         param2.addValue("name", name);
-        return jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description FROM products p JOIN categories c  ON p.category_id = c.id  WHERE  p.name LIKE '%' || :name || '%' ORDER BY p.id",
+        return jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description, count(p.id) size FROM products p JOIN categories c  ON p.category_id = c.id  WHERE  p.name LIKE '%' || :name || '%' GROUP BY p.id, c.category_name ORDER BY p.id",
                 param2, new DataClassRowMapper<>(Menu.class));
     }
 
@@ -66,7 +66,7 @@ public class Dao implements pgDao {
     public Menu findById(int id) {
         var param = new MapSqlParameterSource();
         param.addValue("id", id);
-        var list = jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description FROM products p JOIN categories c  ON p.category_id = c.id WHERE p.id = :id", param, new DataClassRowMapper<>(Menu.class));
+        var list = jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description, count(p.id) size FROM products p JOIN categories c  ON p.category_id = c.id WHERE p.id = :id GROUP BY p.id, c.category_name" , param, new DataClassRowMapper<>(Menu.class));
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -85,7 +85,14 @@ public class Dao implements pgDao {
         param.addValue("price", change.price());
         param.addValue("category_id", change.category_id());
         param.addValue("description", change.description());
+        param.addValue("id", change.id());
         return jdbcTemplate.update("UPDATE products SET product_id = :product_id, name = :name, price = :price, category_id = :category_id, description = :description WHERE id = :id", param);
     }
-
+    @Override
+    public NewName findByProductId(String product_id) {
+        var param = new MapSqlParameterSource();
+        param.addValue("product_id",product_id);
+        var list = jdbcTemplate.query("SELECT * FROM products WHERE product_id = :product_id", param, new DataClassRowMapper<>(NewName.class));
+        return list.isEmpty() ? null : list.get(0);
+    }
 }
