@@ -1,9 +1,6 @@
 package com.example.springwebtask.dao;
 
-import com.example.springwebtask.entity.Category;
-import com.example.springwebtask.entity.Entity;
-import com.example.springwebtask.entity.Menu;
-import com.example.springwebtask.entity.NewName;
+import com.example.springwebtask.entity.*;
 
 import java.util.List;
 
@@ -15,8 +12,9 @@ public interface pgDao {
     List<Category> findAll2();
     List<Menu> search(String name);
     int insert(NewName stationery);
-    Menu findById(int id);
+    Detail findById(int id);
     int delete (int id);
     int update (NewName change);
     NewName findByProductId(String product_id);
+    Category findByCategory(int id);
 }

@@ -1,9 +1,6 @@
 package com.example.springwebtask.dao;
 
-import com.example.springwebtask.entity.Category;
-import com.example.springwebtask.entity.Entity;
-import com.example.springwebtask.entity.Menu;
-import com.example.springwebtask.entity.NewName;
+import com.example.springwebtask.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,7 +30,7 @@ public class Dao implements pgDao {
     //メニュー画面
     @Override
     public List<Menu> findAll() {
-        return jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description, count(p.id) size FROM products p JOIN categories c  ON p.category_id = c.id GROUP BY p.id, c.category_name ORDER BY p.id",
+        return jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description, count(p.id) size FROM products p JOIN categories c  ON p.category_id = c.id GROUP BY p.id, c.category_name ORDER BY p.product_id",
                 new DataClassRowMapper<>(Menu.class));
     }
 
@@ -63,10 +60,10 @@ public class Dao implements pgDao {
     }
 
     @Override
-    public Menu findById(int id) {
+    public Detail findById(int id) {
         var param = new MapSqlParameterSource();
         param.addValue("id", id);
-        var list = jdbcTemplate.query("SELECT p.id, p.product_id, p.name, p.price, c.category_name, p.description, count(p.id) size FROM products p JOIN categories c  ON p.category_id = c.id WHERE p.id = :id GROUP BY p.id, c.category_name" , param, new DataClassRowMapper<>(Menu.class));
+        var list = jdbcTemplate.query("SELECT id, product_id, name, price, category_id, description FROM products WHERE id = :id GROUP BY id" , param, new DataClassRowMapper<>(Detail.class));
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -93,6 +90,14 @@ public class Dao implements pgDao {
         var param = new MapSqlParameterSource();
         param.addValue("product_id",product_id);
         var list = jdbcTemplate.query("SELECT * FROM products WHERE product_id = :product_id", param, new DataClassRowMapper<>(NewName.class));
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @Override
+    public Category findByCategory(int id) {
+        var param = new MapSqlParameterSource();
+        param.addValue("id", id);
+        var list = jdbcTemplate.query("SELECT id, category_name FROM categories WHERE id = :id " , param, new DataClassRowMapper<>(Category.class));
         return list.isEmpty() ? null : list.get(0);
     }
 }

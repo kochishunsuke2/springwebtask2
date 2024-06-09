@@ -23,16 +23,16 @@
 
 <div class="update">
     <div class="form-body">
-<!--        <div class="img_block">-->
-<!--            <img src="images/マッキー.png" class="product-img"><br>-->
-<!--        </div>-->
+        <!--        <div class="img_block">-->
+        <!--            <img src="images/マッキー.png" class="product-img"><br>-->
+        <!--        </div>-->
         <form action="#" th:action="@{/detail}" th:object="${product}" method="post">
             <input type="hidden" th:field="*{id}" value="${product.id}" />
             <fieldset class="label-130 product_block">
-<!--                <p class="error">エラーメッセージ</p>-->
+                <!--                <p class="error">エラーメッセージ</p>-->
                 <div>
                     <label>商品ID</label>
-<!--                    <input type="text" name="productId" value="10001" readonly class="base-text">-->
+                    <!--                    <input type="text" name="productId" value="10001" readonly class="base-text">-->
                     <input type="text" th:field="*{product_id}" value="${product.product_id}" readonly class="base-text"/>
                 </div>
                 <div>
@@ -56,12 +56,12 @@
             </fieldset>
             <div>
                 <div class="btns">
-                    <input type="button" onclick="openModal()" value="削除" class="basic-btn">
-<!--                    <input type="button" onclick="location.href='/detail/{id}(id=${product.id})'" value="編集" class="basic-btn">-->
-                    <button type="button">
-                        <a class="detail_btn" th:href="@{/detail/update/{id}(id=${product.id})}">編集</a>
-                    </button>
-                    <input type="button" onclick="location.href='/menu.html'" value="戻る" class="cancel-btn">
+<!--                    <input type="button" onclick="openModal()" value="削除" class="basic-btn">-->
+                    <!--                    <input type="button" onclick="location.href='/detail/{id}(id=${product.id})'" value="編集" class="basic-btn">-->
+<!--                    <button type="button">-->
+<!--&lt;!&ndash;                        <a class="detail_btn" th:href="@{/detail/update/{id}(id=${product.id})}">編集</a>&ndash;&gt;-->
+<!--                    </button>-->
+                    <input type="button" onclick="location.href='/menu2.html'" value="戻る" class="cancel-btn">
                 </div>
                 <div id="modal">
                     <p class="modal-message">削除しますか？</p>

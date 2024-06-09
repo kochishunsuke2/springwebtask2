@@ -13,7 +13,7 @@
         <p class="user_name">[[ ${session.product.name} ]]さん、こんにちは</p>
         <form class="logout_form" action="logout.html" method="get">
             <button class="custom-btn" type="submit">
-                <img th:src="@{/images/ドアアイコン.png}">ログアウト</button>
+                <img th:src="@{/images/ドアアイコン.png}"><a href="logout.html">ログアウト</a></button>
         </form>
     </div>
 </div>
@@ -28,8 +28,7 @@
     </div>
 
     <div class="form-body">
-        <p class="error">
-            [[ ${session.message} ]]</p>
+        <p class="error" th:text="${errorMsg}"></p>
 
         <form action="insert"  method="post" th:object="${productForm}">
             <fieldset class="label-130">

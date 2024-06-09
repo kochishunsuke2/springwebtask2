@@ -15,6 +15,7 @@
     <p class="error">[[ ${session.message} ]]</p>
 
     <form action="#" method="post" th:object="${loginForm}">
+        <input type="hidden" th:field="*{role}" value="${users.role}" />
         <fieldset>
             <div class="cp_iptxt">
                 <input class="base-input" type="text"  th:field="*{login_id}" name="loginId" placeholder="ID">

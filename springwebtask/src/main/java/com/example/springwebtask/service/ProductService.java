@@ -1,10 +1,7 @@
 package com.example.springwebtask.service;
 
 import com.example.springwebtask.dao.Dao;
-import com.example.springwebtask.entity.Category;
-import com.example.springwebtask.entity.Entity;
-import com.example.springwebtask.entity.Menu;
-import com.example.springwebtask.entity.NewName;
+import com.example.springwebtask.entity.*;
 import com.example.springwebtask.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +42,7 @@ public List<Menu> findAll() {
     }
 
     @Override
-    public Menu findById(int id) {
+    public Detail findById(int id) {
         var product = Dao.findById(id);
         if (product == null) {
             throw new ProductNotFoundException("");
@@ -66,5 +63,11 @@ public List<Menu> findAll() {
     public NewName findByProductId(String product_id) {
         var product = Dao.findByProductId(product_id);
         return product;
+    }
+
+    @Override
+    public Category findByCategory(int id) {
+        var category = Dao.findByCategory(id);
+        return category;
     }
 }
